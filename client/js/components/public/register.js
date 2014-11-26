@@ -9,7 +9,13 @@ var Register = React.createClass({
     },
     render: function() {
         return (
-            <div></div>
+            <div id="register">
+            	<div className="card">
+            		<div className="wrapper">
+            			<span>Register</span>
+            		</div>
+            	</div>
+            </div>
         );
     }
 });

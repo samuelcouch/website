@@ -3,7 +3,8 @@ var fs          = require('fs'),
     async       = require('async'),
     passport    = require('passport');
 
-var log     = require('../log');
+var log         = require('../log');
+var User        = require('../models').User;
 
 exports.route = function(app) {
     app.get('/api/auth/me', function(req, res) {
@@ -19,7 +20,7 @@ exports.route = function(app) {
         }
     });
 
-    app.post('/api/auth/login', passport.authenticate('local'), function(req, res) {
+    app.post('/api/auth/login', passport.authenticate('local-login'), function(req, res) {
         // Authentication succeeded
         return res.status(200).json({
             id:         req.user.id,
@@ -27,5 +28,21 @@ exports.route = function(app) {
             firstName:  req.user.firstName,
             lastName:   req.user.lastName
         });
+    });
+
+    app.post('/api/auth/register', function(req, res) {
+        User
+            .findOrCreate(
+                {
+                    templeEmailAddress: req.body.temail
+                },
+                {
+                    password: req.body.password
+                })
+            .success(function(user, created){
+                if(!created)
+                    return res.status(409);
+                return res.status(200);
+            });
     });
 };

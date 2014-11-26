@@ -49,17 +49,17 @@ module.exports = function(done) {
             app.use(passport.initialize());
             app.use(passport.session());
             // Setup the local passport strategy
-            passport.use('local', new local.Strategy({
-                usernameField: 'userName',
+            passport.use(new local.Strategy({
+                usernameField: 'templeEmailAddress',
                 passReqToCallback: true
-            }, function(req, userName, password, done) {
+            }, function(req, templeEmailAddress, password, done) {
                 var User = req.models.User;
                 User.find({
-                    userName: userName
+                    templeEmailAddress: templeEmailAddress
                 }).then(function(user) {
                     if (!user) {
                         return done(null, false, {
-                            message: 'Could not authenticate user "' + userName + '"'
+                            message: 'Could not authenticate user "' + templeEmailAddress + '"'
                         });
                     } else {
                         // We found a user matching that user name
@@ -67,7 +67,7 @@ module.exports = function(done) {
                         // Compare hashed password here and in the database
                         if (user.password !== hashedPassword) {
                             return done(null, false, {
-                                message: 'Could not authenticate user "' + userName + '"'
+                                message: 'Could not authenticate user "' + templeEmailAddress + '"'
                             });
                         } else {
                             return done(null, user);
