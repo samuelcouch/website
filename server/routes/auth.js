@@ -43,8 +43,8 @@ exports.route = function(app) {
         })
         .success(function(user, created){
             if(!created)
-                return res.status(409);
-            return res.status(200);
+                return res.status(409).end();
+            return res.status(200).end();
         });
     });
 };
