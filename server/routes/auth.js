@@ -4,7 +4,7 @@ var fs          = require('fs'),
     passport    = require('passport');
 
 var log         = require('../log');
-var User        = require('../models').User;
+var models      = require('../models');
 
 exports.route = function(app) {
     app.get('/api/auth/me', function(req, res) {
@@ -31,18 +31,20 @@ exports.route = function(app) {
     });
 
     app.post('/api/auth/register', function(req, res) {
-        User
-            .findOrCreate(
-                {
-                    templeEmailAddress: req.body.temail
-                },
-                {
-                    password: req.body.password
-                })
-            .success(function(user, created){
-                if(!created)
-                    return res.status(409);
-                return res.status(200);
-            });
+        models
+        .User
+        .findOrCreate({
+            where: {
+                templeEmailAddress: req.body.temail
+            }
+        },
+        {
+            password: req.body.password
+        })
+        .success(function(user, created){
+            if(!created)
+                return res.status(409);
+            return res.status(200);
+        });
     });
 };

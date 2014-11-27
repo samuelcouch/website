@@ -1,34 +1,25 @@
-var Sequelize = require('sequelize');
-
-var MODEL_ID = 'User';
-
-var model = undefined;
-module.exports = {
-    id: MODEL_ID,
-    model: function(db) {
-        if (!model) {
-            model = db.define(MODEL_ID, {
-                userName:               Sequelize.STRING,
-                password:               Sequelize.STRING,
-                firstName:              Sequelize.STRING,
-                lastName:               Sequelize.STRING,
-                templeEmailAddress:     {
-                    type:       Sequelize.STRING,
-                    validate:   {
-                        isEmail: true
-                    }
-                },
-                personalEmailAddress:   {
-                    type:       Sequelize.STRING,
-                    validate:   {
-                        isEmail: true
-                    }
-                },
-                twitter:                Sequelize.STRING,
-                github:                 Sequelize.STRING,
-                bio:                    Sequelize.TEXT
-            });
+module.exports = function(sequelize, DataTypes) {
+  var User = sequelize.define('User', {
+    userName:               DataTypes.STRING,
+    password:               DataTypes.STRING,
+    firstName:              DataTypes.STRING,
+    lastName:               DataTypes.STRING,
+    templeEmailAddress:     {
+        type:       DataTypes.STRING,
+        validate:   {
+            isEmail: true
         }
-        return model;
-    }
-};
+    },
+    personalEmailAddress:   {
+        type:       DataTypes.STRING,
+        validate:   {
+            isEmail: true
+        }
+    },
+    twitter:                DataTypes.STRING,
+    github:                 DataTypes.STRING,
+    bio:                    DataTypes.TEXT
+  });
+
+  return User;
+}

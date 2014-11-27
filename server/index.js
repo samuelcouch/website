@@ -12,7 +12,7 @@ var express         = require('express'),
     local           = require('passport-local');
 
 var routes      = require('./routes'),
-    db          = require('./db'),
+    db          = require('./models'),
     util        = require('./util'),
     log         = require('./log');
 
@@ -41,8 +41,18 @@ module.exports = function(done) {
     // Perform setup
     async.series([
         function(callback) {
-            // Setup the database
-            db.setup(app, callback);
+            db
+            .sequelize
+            .sync({
+                force: util.env.isResettingDb
+            })
+            .success(function(){
+                log.info('Database configuration completed');
+                callback();
+            })
+            .catch(function(err) {
+                callback(err);
+            });
         },
         function(callback) {
             // Setup the passport configuration
