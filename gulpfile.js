@@ -117,7 +117,7 @@ gulp.task('dev', ['watch'], function() {
             DB: constants.STAGING_DB_CONN_STRING,
             VERBOSE: true,
             SESSION_SECRET: 'thisisnotasecretatall',
-            RESET_DB: false
+            RESET_DB: true
         }
     });
 });
