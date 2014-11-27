@@ -14,6 +14,16 @@ var AuthService = {
                 password: pass
             })
             .end(callback);
+    },
+    register: function(user, tuemail, pass, callback){
+        request
+            .post('/api/auth/register')
+            .send({
+                userName: user,
+                templeEmailAddress: tuemail,
+                password: pass
+            })
+            .end(callback);
     }
 };
 

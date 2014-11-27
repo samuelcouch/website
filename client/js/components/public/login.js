@@ -81,7 +81,7 @@ var Login = React.createClass({
                         component.setState({
                             waiting: false,
                             toastMessage:
-                                'There is was internal problem with the server. ' +
+                                'There was internal problem with the server. ' +
                                 'If you don\'t mind, shoot us an email at if this keeps happening.'
                         });
                     }

@@ -59,11 +59,11 @@ module.exports = function(done) {
             app.use(passport.initialize());
             app.use(passport.session());
             // Setup the local passport strategy
-            passport.use(new local.Strategy({
-                usernameField: 'templeEmailAddress',
+            passport.use('local', new local.Strategy({
+                usernameField: 'userName',
                 passReqToCallback: true
             }, function(req, templeEmailAddress, password, done) {
-                var User = req.models.User;
+                var User = db.User;
                 User.find({
                     templeEmailAddress: templeEmailAddress
                 }).then(function(user) {
